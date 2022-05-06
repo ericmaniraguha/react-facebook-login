@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import FacebookLogin from 'react-facebook-login';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+    };
+  }
+
+  responseFacebook = (response) => {
+    console.log(response);
+    this.setState({ isLoggedIn: true });
+  };
+
+  render() {
+    return (this.state.isLoggedIn ? 
+      'Welcome to barefoot nomad'
+    : (
+      <div>
+        <FacebookLogin
+          appId='422842179578149'
+          autoLoad={true}
+          fields='name,email,picture'
+          // onClick={componentClicked}
+          callback={this.responseFacebook}
+        />
+      </div>)
+    )
+  }
 }
 
 export default App;
